@@ -11,6 +11,7 @@ program
   .option('--gclient_file <file>', 'gclient config file location')
   .option('--run_hooks', 'run gclient hooks')
   .option('--run_sync', 'run gclient sync')
+  .option('--prepend_path <path>', 'optional path to prepend when running sync commands')
   .option('--submodule_sync', 'run submodule sync')
   .option('--init', 'initialize all dependencies')
   .option('--all', 'update all projects')
