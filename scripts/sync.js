@@ -15,6 +15,7 @@ program
   .option('--init', 'initialize all dependencies')
   .option('--all', 'update all projects')
 projectNames.forEach((project) => {
+  project = project.replace('-', '_')
   program.option('--' + project + '_ref <ref>', project + ' ref to checkout')
 })
 
@@ -36,7 +37,7 @@ if (program.init) {
 let updatedVersion = false
 
 projectNames.forEach((project) => {
-  if (program.init || program.all || program[project + '_ref']) {
+  if (program.init || program.all || program[project.replace('-', '_') + '_ref']) {
     updatedVersion = true
     util.setDepVersion(config.projects[project].dir, config.projects[project].ref)
   }
