@@ -9,6 +9,7 @@ const projectNames = config.projectNames.filter((project) => config.projects[pro
 program
   .version(process.env.npm_package_version)
   .option('--gclient_file <file>', 'gclient config file location')
+  .option('--gclient_verbose', 'verbose output for gclient')
   .option('--run_hooks', 'run gclient hooks')
   .option('--run_sync', 'run gclient sync')
   .option('--prepend_path <path>', 'optional path to prepend when running sync commands')
@@ -24,15 +25,15 @@ program.parse(process.argv)
 config.update(program)
 
 if (program.init || program.submodule_sync) {
-  util.submoduleSync()
+  util.submoduleSync({verbose: config.gClientVerbose})
 }
 
 if (program.init) {
-  util.buildGClientConfig()
+  util.buildGClientConfig({verbose: config.gClientVerbose})
 }
 
 if (program.init) {
-  util.gclientSync()
+  util.gclientSync({verbose: config.gClientVerbose})
 }
 
 let updatedVersion = false
@@ -45,9 +46,9 @@ projectNames.forEach((project) => {
 })
 
 if (updatedVersion || program.init || program.run_sync) {
-  util.gclientSync()
+  util.gclientSync({verbose: config.gClientVerbose})
 }
 
 if (updatedVersion || program.init || program.run_hooks) {
-  util.gclientRunhooks()
+  util.gclientRunhooks({verbose: config.gClientVerbose})
 }
